@@ -3,8 +3,6 @@
 
 // module Data.Traversable
 
-// jshint maxparams: 3
-
 exports.traverseArrayImpl = function () {
   function Cont (fn) {
     this.fn = fn;
@@ -12,14 +10,9 @@ exports.traverseArrayImpl = function () {
 
   var emptyList = {};
 
-  var ConsCell = function (head, tail) {
-    this.head = head;
-    this.tail = tail;
-  };
-
   function consList (x) {
     return function (xs) {
-      return new ConsCell(x, xs);
+      return { head: x, tail: xs };
     };
   }
 
@@ -36,10 +29,12 @@ exports.traverseArrayImpl = function () {
     return function (map) {
       return function (pure) {
         return function (f) {
+          /* jshint maxparams: 2 */
           var buildFrom = function (x, ys) {
             return apply(map(consList)(f(x)))(ys);
           };
 
+          /* jshint maxparams: 3 */
           var go = function (acc, currentLen, xs) {
             if (currentLen === 0) {
               return acc;
