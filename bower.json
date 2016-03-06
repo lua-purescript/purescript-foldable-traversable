@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/purescript/purescript-foldable-traversable.git"
+    "url": "git://github.com/lua-purescript/purescript-foldable-traversable.git"
   },
   "ignore": [
     "**/.*",
