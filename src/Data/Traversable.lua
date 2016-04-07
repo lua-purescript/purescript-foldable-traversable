@@ -3,7 +3,9 @@ local Traversable = {}
 
 Traversable.traverseArrayImpl = (function ()
   function Cont (fn)
-    this.fn = fn
+	local ret = {}
+    ret.fn = fn
+	return ret
   end
 
   local emptyList = {}
@@ -36,7 +38,7 @@ Traversable.traverseArrayImpl = (function ()
               return acc
             else
               local last = xs[currentLen]
-              return new Cont(function ()
+              return Cont(function ()
                 return go(buildFrom(last, acc), currentLen - 1, xs)
               end)
             end
