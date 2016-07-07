@@ -1,4 +1,3 @@
--- module Data.Foldable
 local Foldable = {}
 
 Foldable.foldrArray = function (f)

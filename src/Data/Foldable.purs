@@ -228,8 +228,8 @@ oneOf = foldr alt empty
 intercalate :: forall f m. (Foldable f, Monoid m) => m -> f m -> m
 intercalate sep xs = (foldl go { init: true, acc: mempty } xs).acc
   where
-  go { init = true } x = { init: false, acc: x }
-  go { acc = acc }   x = { init: false, acc: acc <> sep <> x }
+  go { init: true } x = { init: false, acc: x }
+  go { acc: acc }   x = { init: false, acc: acc <> sep <> x }
 
 -- | The conjunction of all the values in a data structure. When specialized
 -- | to `Boolean`, this function will test whether all of the values in a data
@@ -271,7 +271,10 @@ notElem x = not <<< elem x
 
 -- | Try to find an element in a data structure which satisfies a predicate.
 find :: forall a f. Foldable f => (a -> Boolean) -> f a -> Maybe a
-find p = foldl (\r x -> if p x then Just x else r) Nothing
+find p = foldl go Nothing
+  where
+  go Nothing x | p x = Just x
+  go r _ = r
 
 -- | Find the largest element of a structure, according to its `Ord` instance.
 maximum :: forall a f. (Ord a, Foldable f) => f a -> Maybe a
